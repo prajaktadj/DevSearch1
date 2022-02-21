@@ -1,0 +1,143 @@
+{% extends 'main.html' %}
+{% block content %}
+    <!--<p>All Projects Template</p>
+
+    {% for p_dict in proj_list %}-->
+        <!--<p>{{p_dict.id}} --<a href="/all/project/{{p_dict.id}}/"> {{p_dict.title}}</a>--{{p_dict.description}}</p>-->
+        <!--<p>{{p_dict.id}} --<a href=" {% url 'projects:project' p_dict.id %} "> {{p_dict.title | title}}</a>--{{p_dict.description | lower}}</p>
+    {% endfor %}-->
+
+    
+    <p>List of Projects</p>
+    <table style="border: 2px solid blue;">
+      <tr>
+         <th>ID</th>
+         <th>Project Name</th>
+         <th>Votes</th>
+         <th>Positive Votes(%)</th>
+         <th>View</th>
+      </tr>
+      {% for p in projects %}
+        <tr>
+           <td>
+              {{p.id}}
+
+           </td>
+           <td>
+              {{p.name}}
+           </td>
+           <td>
+              {{p.Vote_total}}
+           </td>
+           <td>
+              {{p.Vote_ratio}}
+           </td>
+           <td>
+              <a href="{% url 'projects:project' p.id %}">View</a>
+           </td>
+           <td>
+            <a href="{% url 'projects:update-project' p.id %}">Edit</a>
+         </td>
+         <td>
+            <a href="{% url 'projects:delete-project' p.id %}">Delete</a>
+         </td>
+        </tr>
+      {% endfor %}
+   </table>
+   <!--<hr>
+    {{d_val|date:"d/m/Y"}}
+    <br>
+    {{number}}
+    {% if number > 10 %}
+       <p>number is greater than 10</p>
+    {% elif number == 10 %}
+       <p>number is exacttly 10</p>
+    {% else %}
+       <p>number is lesser than 10</p>
+    {% endif %}-->
+
+    <!-- Main Section -->
+  <main class="projects">
+   <section class="hero-section text-center">
+     <div class="container container--narrow">
+       <div class="hero-section__box">
+         <h2>Search for <span>Projects</span></h2>
+       </div>
+
+       <div class="hero-section__search">
+         <form class="form" action="#" method="get">
+           <div class="form__field">
+             <label for="formInput#search">Search By Projects </label>
+             <input class="input input--text" id="formInput#search" type="text" name="search_query"
+               placeholder="Search by Project Title" value="{{search_query}}" />
+           </div>
+
+           <input class="btn btn--sub btn--lg" type="submit" value="Search" />
+         </form>
+       </div>
+     </div>
+   </section>
+   <!-- Search Result: DevList -->
+   
+   <section class="projectsList">
+     <div class="container">
+       <div class="grid grid--three">
+      {% for p in projects %}   
+         <div class="column">
+           <div class="card project">
+             <a href="{% url 'projects:project' p.id %}" class="project">
+               <img class="project__thumbnail" src="{{p.image.url}}" alt="project thumbnail" />
+               <div class="card__body">
+                 <h3 class="project__title">{{p.name}}</h3>
+                 <p><a class="project__author" href="">{{p.owner.name}}</a></p>
+                 <p class="project--rating">
+                   <span style="font-weight: bold;">{{p.Vote_ratio}}</span> Postitive
+                   Feedback ({{p.Vote_total}} Votes)
+                 </p>
+                 <div class="project__tags">
+                  {% for tag in p.Tag.all %}
+                   <span class="tag tag--pill tag--main">
+                     <small>{{tag}}</small>
+                   </span>
+                  {% endfor %}
+                   
+                 </div>
+               </div>
+             </a>
+           </div>
+         </div>
+      {% endfor %}
+         
+
+         
+
+         
+
+         
+
+         
+
+       </div>
+     </div>
+   </section>
+
+   <div class="pagination">
+     <ul class="container">
+       <li><a href="#" class="btn btn--disabled">&#10094; Prev</a></li>
+       <li><a href="#" class="btn btn--sub">01</a></li>
+       <li><a href="#" class="btn">02</a></li>
+       <li><a href="#" class="btn">03</a></li>
+       <li><a href="#" class="btn">04</a></li>
+       <li><a href="#" class="btn">05</a></li>
+       <li><a href="#" class="btn">06</a></li>
+       <li><a href="#" class="btn">07</a></li>
+       <li><a href="#" class="btn">08</a></li>
+       <li><a href="#" class="btn">09</a></li>
+       <li><a href="#" class="btn">10</a></li>
+       <li><a href="#" class="btn">Next &#10095;</a></li>
+     </ul>
+   </div>
+ </main> 
+
+    
+{% endblock %}
